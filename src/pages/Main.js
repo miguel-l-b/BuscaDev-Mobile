@@ -42,11 +42,11 @@ function Main({ navigation }) {
             }
         })
 
-        setDevs(response.data)
+        setDevs(response.data.devs)
     }
 
-    function handleRegionChaged() {
-        
+    function handleRegionChaged(region) {
+        setCurrentRegin(region)
     }
 
     if (!currentRegion) {
@@ -55,18 +55,20 @@ function Main({ navigation }) {
     return (
             <>
             <MapView onRegionChangeComplete={handleRegionChaged} initialRegion={currentRegion} style={styles.map}>
-                <Marker coordinate={{ latitude: -22.9152036, longitude: -47.1110061}}>
-                    <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/59874694?s=400&u=47c6775135486e651dc6bde1ea59f992da0c004f&v=4'}} />
+                {devs.map(devs => (
+                    <Marker key={devs._id} coordinate={{ latitude: devs.location.coordinates[1], longitude: devs.location.coordinates[0]}}>
+                    <Image style={styles.avatar} source={{ uri: devs.avatar_url}} />
                     <Callout onPress={() => {
-                        navigation.navigate('Profile', { github_username: 'Miguel-Coruj'})
+                        navigation.navigate('Profile', { github_username: devs.github_username})
                     }}>
                         <View style={styles.callout}>
-                            <Text style={styles.devname}>Miguel Lopes</Text>
-                            <Text style={styles.devbio}>Mero amador</Text>
-                            <Text style={styles.devtechs}>NodeJS, React Native, ReactJS</Text>
+                            <Text style={styles.devname}>{devs.name}</Text>
+                            <Text style={styles.devbio}>{devs.bio}</Text>
+                            <Text style={styles.devtechs}>{devs.techs.join(', ')}</Text>
                         </View>
                     </Callout>
                 </Marker>
+                ))}
             </MapView>
             <View style={styles.searchFrom}>
                 <TextInput 
