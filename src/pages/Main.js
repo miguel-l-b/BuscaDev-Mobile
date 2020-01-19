@@ -3,7 +3,9 @@ import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity } from 'reac
 import MapView, { Marker, Callout } from 'react-native-maps'
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
 import { MaterialIcons } from '@expo/vector-icons'
+
 import api from '../services/api'
+import { ConnectSocket, DisconnectSocket } from '../services/socket'
 
 function Main({ navigation }) {
    const [currentRegion, setCurrentRegin] = useState(null)
@@ -32,6 +34,11 @@ function Main({ navigation }) {
 
         loadInitialPosition()
     })
+
+    function SetupWebSocket() {
+        ConnectSocket()
+    }
+
     async function loadDevs() {
         const { latitude, longitude } = currentRegion
 
@@ -44,6 +51,7 @@ function Main({ navigation }) {
         })
 
         setDevs(response.data.devs)
+        SetupWebSocket()
     }
 
     function handleRegionChaged(region) {
@@ -78,7 +86,6 @@ function Main({ navigation }) {
                     placeholderTextColor= "#999"
                     autoCapitalize="words"
                     autoCorrect={false}
-                    value={techs}
                     onChangeText={setTechs}
                 />
                 <TouchableOpacity onPress={loadDevs} style={styles.loadButton}>
