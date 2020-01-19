@@ -4,8 +4,18 @@ const socket = socketio('https://api-devbusca.herokuapp.com', {
     autoConnect: false,
 })
 
-function ConnectSocket() {
+function subscribeToNewDevs(subcribeFunction) {
+    socket.on('new-dev', subcribeFunction)
+}
+
+function ConnectSocket(longitude, latitude, techs) {
+    socket.io.opts.query = {
+        latitude,
+        longitude,
+        techs,
+    }
     socket.connect()
+
 }
 
 function DisconnectSocket() {
@@ -17,4 +27,5 @@ function DisconnectSocket() {
 export {
     ConnectSocket,
     DisconnectSocket,
+    subscribeToNewDevs,
 }
