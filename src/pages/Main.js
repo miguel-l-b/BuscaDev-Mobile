@@ -4,6 +4,7 @@ import MapView, { Marker, Callout } from 'react-native-maps'
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
 import { MaterialIcons } from '@expo/vector-icons'
 
+import logoimg from '../../assets/icon.png'
 import api from '../services/api'
 import { ConnectSocket, DisconnectSocket, subscribeToNewDevs } from '../services/socket'
 
@@ -90,6 +91,10 @@ function Main({ navigation }) {
                 </Marker>
                 ))}
             </MapView>
+            <View style={styles.logo}>
+                <Image style={styles.imglogo} source={logoimg} />
+                <Text style={styles.textlogo}>Omnistack</Text>
+            </View>
             <View style={styles.searchFrom}>
                 <TextInput 
                     style={styles.searchInput} 
@@ -164,7 +169,33 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 15,
-    }
+    },
+    logo: {
+        position: 'absolute',
+        backgroundColor: '#fff',
+        borderRadius: 25,
+        height: 40,
+        width: 100,
+        bottom: 4,
+        left: 4,
+        zIndex: 5,
+        flexDirection: 'row',
+        
+    },
+    imglogo: {
+        width: 30,
+        height: 30,
+        top: 4,
+        left: 8,
+    },
+    textlogo: { 
+        alignItems: 'center',
+        top: 11,
+        left: 6,
+        fontSize: 12,
+        color: '#000',
+        
+    },
 })
 
 export default Main
