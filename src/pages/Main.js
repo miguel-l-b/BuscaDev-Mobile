@@ -93,7 +93,7 @@ function Main({ navigation }) {
             </MapView>
             <View style={styles.logo}>
                 <Image style={styles.imglogo} source={logoimg} />
-                <Text style={styles.textlogo}>Omnistack</Text>
+                <Text style={styles.textlogo}>OmniStack</Text>
             </View>
             <View style={styles.searchFrom}>
                 <TextInput 
