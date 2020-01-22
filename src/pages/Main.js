@@ -6,7 +6,6 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 import api from '../services/api'
 import { ConnectSocket, DisconnectSocket, subscribeToNewDevs } from '../services/socket'
-import { disconnect } from 'cluster'
 
 function Main({ navigation }) {
    const [currentRegion, setCurrentRegin] = useState(null)
@@ -40,7 +39,7 @@ function Main({ navigation }) {
     })
 
     function SetupWebSocket() {
-        disconnect()
+        DisconnectSocket()
 
         const { latitude, longitude } = currentRegion
 
